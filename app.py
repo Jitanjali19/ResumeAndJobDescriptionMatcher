@@ -19,14 +19,39 @@ import pytesseract
 #google gemini pro so we can connect AI to proejct for keywords and other detailing 
 import google.generativeai as genai
 
+
 #google_api_key from .env file
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 
+'''   ye krish vala hai
 def get_gemini_response(input,pdf_content,prompt):
     model=genai.GenerativeModel('gemini-1.5-flash')
     response=model.generate_content([input,pdf_content[0],prompt])
     return response.text
+
+'''
+
+def get_gemini_response(job_desc, resume_text, prompt):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content([job_desc, resume_text, prompt])
+    return response.text
+
+
+def pdf_to_text(uploaded_file):
+    if uploaded_file is not None:
+        pdf_bytes = uploaded_file.read()
+        uploaded_file.seek(0)
+        images = pdf2image.convert_from_bytes(pdf_bytes)
+
+        text_content = ""
+        for page in images:
+            text_content += pytesseract.image_to_string(page) + "\n"
+
+        return text_content
+    else:
+        raise FileNotFoundError("No File Uploaded")
+
 
 #this prompt play a very imaportant role because it tell -> what model need to be do
 #pdf to text and the  text is given to the gemini and and it give text formate answer
@@ -118,6 +143,7 @@ Give me the percentage of match if the resume matches job description.
 First the output should come as percentage and then keywords missing and last final thoughts.
 """
 
+''' ye krsih naik vala hai
 if submit1:
     if uploaded_file is not None:
         pdf_content=input_pdf_setup(uploaded_file)
@@ -157,3 +183,37 @@ elif submit4:
         st.write(response)
     else:
         st.write("Please Upload the Resume")
+
+        
+        '''
+
+if submit1:
+    if uploaded_file is not None:
+        resume_text = pdf_to_text(uploaded_file)
+        response = get_gemini_response(input_text, resume_text, input_prompt1)
+        st.subheader("The Response is")
+        st.write(response)
+
+
+if submit2:
+    if uploaded_file is not None:
+        resume_text = pdf_to_text(uploaded_file)
+        response = get_gemini_response(input_text, resume_text, input_prompt2)
+        st.subheader("The Response is")
+        st.write(response)
+
+
+if submit3:
+    if uploaded_file is not None:
+        resume_text = pdf_to_text(uploaded_file)
+        response = get_gemini_response(input_text, resume_text, input_prompt3)
+        st.subheader("The Response is")
+        st.write(response)
+
+
+if submit4:
+    if uploaded_file is not None:
+        resume_text = pdf_to_text(uploaded_file)
+        response = get_gemini_response(input_text, resume_text, input_prompt4)
+        st.subheader("The Response is")
+        st.write(response)
