@@ -1,3 +1,6 @@
+import os
+os.environ["NO_GCE_CHECK"] = "True"
+
 from dotenv import load_dotenv
 # from pdf2image import convert_from_bytes
 
@@ -6,7 +9,7 @@ load_dotenv()
 import base64
 #these are all reuirement imported so i can use to access
 import streamlit as st
-import os
+
 import io
 #convert pdf into image
 from PIL import Image
