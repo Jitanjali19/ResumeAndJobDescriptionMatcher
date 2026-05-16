@@ -1,5 +1,6 @@
 # https://resumeandjobdescriptionmatcher-l9uxfi8drbrtsjwwd9x3rz.streamlit.app/
-#  ye original deployeent link hai
+# https://resumeandjobdescriptionmatcher-l9uxfi8drbrtsjwwd9x3rz.streamlit.app/
+#  ye original deployment link hai
 
 
 # import streamlit as st
@@ -168,9 +169,7 @@ if submit:
             text = input_pdf_text(uploaded_file)
             # Fill the prompt template with resume text and JD
             input_prompt_filled = input_prompt_template.format(text=text, jd=jd)
-           # Fill the prompt with resume text and job description
-            input_prompt_filled = input_prompt.format(text=text, jd=jd)
-            response = get_gemini_repsonse(input_prompt_filled)
+            response = get_gemini_response(input_prompt_filled)
 
 
         st.success("✅ Analysis Completed!")
